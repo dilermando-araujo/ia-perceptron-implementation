@@ -4,11 +4,11 @@ const inputs = [
     [1, 0, 1, -1],
     [0, 0, 1, -1]
 ];
-const neuron_weights = [1, 1, 1];
-const weight_history = [[1, 1, 1]];
-const training_history = [];
+let neuron_weights = [] // [1, 1, 1];
+let weight_history = [[]] // [[1, 1, 1]];
+let training_history = [];
 
-const learning_rate = 0.3;
+let learning_rate = 0.3;
 
 function add_weights_to_history(current_weights) {
     const history_row = [];
@@ -46,7 +46,7 @@ function neuron(input, output) {
     )
 }
 
-function recalculate_weights(generatedClass) {
+function recalculate_weights(generatedClass, idx) {
     for (let weight_idx in neuron_weights) {
         neuron_weights[weight_idx] = neuron_weights[weight_idx] + (learning_rate * (inputs[idx][3] - generatedClass) * inputs[idx][weight_idx]);
     }
@@ -54,20 +54,22 @@ function recalculate_weights(generatedClass) {
     add_weights_to_history(neuron_weights);
 }
 
-let idx = -1;
-while (idx + 1 < inputs.length) {
-    idx++;
+function run_training() {
+    let idx = -1;
 
-    let restart = false;
-    while (true) {
-        const generatedClass = neuron(inputs[idx], neuron_activation);
-        if (test_input(inputs[idx], generatedClass, inputs[idx][3])) break;
-
-        restart = true;
-        recalculate_weights(generatedClass);
+    while (idx + 1 < inputs.length) {
+        idx++;
+    
+        let restart = false;
+        while (true) {
+            const generatedClass = neuron(inputs[idx], neuron_activation);
+            if (test_input(inputs[idx], generatedClass, inputs[idx][3])) break;
+    
+            restart = true;
+            recalculate_weights(generatedClass, idx);
+        }
+    
+        if (restart) idx = -1;
     }
-
-    if (restart) idx = -1;
 }
 
-draw_weight_history_charts(weight_history, training_history);
