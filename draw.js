@@ -1,28 +1,77 @@
-// // y = ax + b;
-// // x = (y - b) / a;
+function group_training_history_by_weight_history_id(training_history) {
+    const groups = {};
 
-// // vis.append('line')
-// //     .style('stroke', 'black')
-// //     .attr('x1', xScale(0))
-// //     .attr('y1', yScale(-2))
-// //     .attr('x2', xScale(-2))
-// //     .attr('y2', yScale(0));
+    for (let i in training_history) {
+        if (groups[training_history[i][2]] === undefined) 
+            groups[training_history[i][2]] = [];
 
-// // vis.append("circle")
-// //     .style("fill", "black")
-// //     .attr("cx", xScale(5))
-// //     .attr("cy", yScale(5))
-// //     .attr("r", 3);
+        groups[training_history[i][2]].push(training_history[i]);
+    }
 
-function add_html_elements_for_history_charts(history) {
+    return groups;
+}
+
+function add_html_elements_for_history_charts(history, training) {
     const appHtmlElem = document.getElementById('app');
+    const training_grouped = group_training_history_by_weight_history_id(training);
+
     for (let i = 0; i < history.length; i++) {
-        const graphHtmlElem = document.createElement('div');
+        const chartContainerHtmlElem = document.createElement('div');
 
-        graphHtmlElem.id = `chart-${i}`;
-        graphHtmlElem.classList.add('chart');
+        let training_rows_html = '';
+        for (let idx in training_grouped[i]) {
+            training_rows_html += `
+                <tr class="${
+                    training_grouped[i][idx][3] 
+                        ? 'training-successful' : 'training-failed'
+                }">
+                    <td>${training_grouped[i][idx][0][0]}</td>
+                    <td>${training_grouped[i][idx][0][1]}</td>
+                    <td>${training_grouped[i][idx][0][3]}</td>
+                </tr>
+            `;
+        }
 
-        appHtmlElem.appendChild(graphHtmlElem);
+        chartContainerHtmlElem.innerHTML = `
+            <div class="chart" id="chart-${i}"></div>
+            <div class="table">
+                <div class="weight-table" id="weight-table-${i}">
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>Peso 1</td>
+                                <td>Peso 2</td>
+                                <td>Peso 3</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>${Number(history[i][0].toFixed(2))}</td>
+                                <td>${Number(history[i][1].toFixed(2))}</td>
+                                <td>${Number(history[i][2].toFixed(2))}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="training-table" id="training-table-${i}">
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>X</td>
+                                <td>Y</td>
+                                <td>Classe</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${training_rows_html}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        `;
+
+        chartContainerHtmlElem.classList.add('chart-container');
+        appHtmlElem.appendChild(chartContainerHtmlElem);
     }
 }
 
@@ -36,7 +85,7 @@ function get_max_abs(n1, n2) {
     return Math.abs(n2);
 }
 
-function draw_weight_chart(id, weights, intercepts, inputs) {
+function draw_weight_chart(id, intercepts, inputs) {
     const height = document.getElementById(id).clientHeight;
     const width = document.getElementById(id).clientWidth;
     const padding = 20;
@@ -93,14 +142,14 @@ function draw_weight_chart(id, weights, intercepts, inputs) {
 
 }
 
-function draw_weight_history_charts(history) {
-    add_html_elements_for_history_charts(history);
+function draw_weight_history_charts(history, training_history) {
+    add_html_elements_for_history_charts(history, training_history);
 
     for (let i in history) {
         const x_intercept = -1 * (history[i][2] / history[i][0]);
         const y_intercept = -1 * (history[i][2] / history[i][1]);
 
-        draw_weight_chart(`chart-${i}`, history[i], [x_intercept, y_intercept], inputs);
+        draw_weight_chart(`chart-${i}`, [x_intercept, y_intercept], inputs);
     }
 
 }

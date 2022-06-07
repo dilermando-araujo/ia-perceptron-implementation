@@ -1,6 +1,57 @@
+#app {
+  margin-bottom: 80px;
+}
+
+.chart-container {
+  display: flex;
+}
+
 .chart {
   height: 400px;
   width: 400px;
+}
+
+.weight-table {
+  margin-bottom: 10px;
+}
+
+.table {
+  margin-top: 25px;
+}
+
+.table table {
+  border-collapse: collapse;
+  font-family: Tahoma, Geneva, sans-serif;
+}
+
+.table table td {
+  padding: 15px;
+}
+
+.table table thead td {
+  background-color: #54585d;
+  color: #fff;
+  font-weight: bold;
+  font-size: 13px;
+  border: 1px solid #54585d;
+  text-align: center;
+}
+
+.table table tbody td {
+  color: #636363;
+  border: 1px solid #dddfe1;
+}
+
+.table table tbody tr {
+  background-color: #f9fafb;
+}
+
+.table table tbody tr:nth-child(odd) {
+  background-color: #fff;
+}
+
+.training-failed td {
+  color: #e74c3c !important;
 }
 
 .axis path,
