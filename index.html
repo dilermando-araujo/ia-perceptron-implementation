@@ -17,11 +17,32 @@
         <button onclick="on_start_training()">INICIAR TREINAMENTO</button>
         <button onclick="generate_weights_random()">GERAR PESOS</button>
     </div>
-    <div id="app"></div>
+    <div id="dashboard">
+        <div id="app"></div>
+        <div class="table" id="table-inputs">
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Id</td>
+                            <td>X</td>
+                            <td>Y</td>
+                            <td>Classe</td>
+                        </tr>
+                    </thead>
+                    <tbody id="table-inputs-table-values">
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <h2 id="table-inputs-title">ENTRADAS</h2>
+            </div>
+        </div>
+    </div>
 
     <script src="d3.min.js"></script>
-    <script src="draw.js"></script>
     <script src="script.js"></script>
+    <script src="draw.js"></script>
     <script src="form.js"></script>
 </body>
 </html>

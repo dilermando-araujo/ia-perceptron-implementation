@@ -1,3 +1,21 @@
+#dashboard {
+  display: flex;
+  justify-content: space-between;
+}
+
+#table-inputs {
+  margin-top: 32px;
+  margin-right: 50px;
+}
+
+#table-inputs-title {
+  text-align: center;
+  font-size: 15px;
+  margin: 0;
+  margin-top: 5px;
+  letter-spacing: 1.5px;
+}
+
 #app {
   margin-bottom: 80px;
 }

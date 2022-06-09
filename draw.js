@@ -188,3 +188,21 @@ function draw_weight_history_charts(history, training_history) {
     }
 
 }
+
+function draw_html_table_input_values() {
+    let html_input_values = '';
+
+    for (let idx in inputs) {
+        html_input_values += `
+            <tr>
+                <td>${Number(idx) + 1}</td>
+                <td>${inputs[idx][0]}</td>
+                <td>${inputs[idx][1]}</td>
+                <td>${inputs[idx][3]}</td>
+            </tr>
+        `;
+    }
+
+    document.getElementById('table-inputs-table-values').innerHTML = html_input_values;
+}
+draw_html_table_input_values();

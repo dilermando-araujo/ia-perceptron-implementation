@@ -72,4 +72,3 @@ function run_training() {
         if (restart) idx = -1;
     }
 }
-
