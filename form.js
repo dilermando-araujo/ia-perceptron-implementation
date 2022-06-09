@@ -8,6 +8,11 @@ function generate_weights_random() {
 }
 
 function on_start_training() {
+    weight_history = [[]];
+    training_history = [];
+
+    learning_rate = document.getElementById('input-learning-rate').value;
+
     for (let i = 0; i < 3; i++) {
         neuron_weights[i] = Number(document.getElementById(`input-weight-${i}`).value);
         weight_history[0][i] = Number(document.getElementById(`input-weight-${i}`).value);

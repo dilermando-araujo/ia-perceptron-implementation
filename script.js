@@ -4,11 +4,11 @@ const inputs = [
     [1, 0, 1, -1],
     [0, 0, 1, -1]
 ];
-let neuron_weights = [] // [1, 1, 1];
-let weight_history = [[]] // [[1, 1, 1]];
+let neuron_weights = []; // [1, 1, 1];
+let weight_history = [[]]; // [[1, 1, 1]];
 let training_history = [];
 
-let learning_rate = 0.3;
+let learning_rate = 0; // 0.3
 
 function add_weights_to_history(current_weights) {
     const history_row = [];
@@ -21,7 +21,7 @@ function add_weights_to_history(current_weights) {
 }
 
 function test_input(input, generatedClass, expectedClass) {
-    const ok = generatedClass === expectedClass
+    const ok = generatedClass === expectedClass;
 
     const input_row = [];
     for (let i in input) {

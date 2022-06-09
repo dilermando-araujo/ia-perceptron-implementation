@@ -4,6 +4,7 @@
 
 .chart-container {
   display: flex;
+  margin-top: 7px;
 }
 
 .chart {
@@ -11,7 +12,7 @@
   width: 400px;
 }
 
-.weight-table {
+.weight-table, .intercepts-table {
   margin-bottom: 10px;
 }
 

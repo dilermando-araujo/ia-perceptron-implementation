@@ -53,6 +53,22 @@ function add_html_elements_for_history_charts(history, training) {
                         </tbody>
                     </table>
                 </div>
+                <div class="intercepts-table" id="intercept-table-${i}">
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>x-intercept</td>
+                                <td>y-intercept</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td id="intercept-table-${i}-x-value">-</td>
+                                <td id="intercept-table-${i}-y-value">-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <div class="training-table" id="training-table-${i}">
                     <table>
                         <thead>
@@ -85,7 +101,19 @@ function get_max_abs(n1, n2) {
     return Math.abs(n2);
 }
 
+function valid_intercepts_params(intercepts) {
+
+    for (let idx in intercepts) {
+        if (Number.isNaN(intercepts[idx])) return false;
+        if (intercepts[idx] == Infinity) return false;
+    }
+
+    return true;
+}
+
 function draw_weight_chart(id, intercepts, inputs) {
+    if(!valid_intercepts_params(intercepts)) return;
+
     const height = document.getElementById(id).clientHeight;
     const width = document.getElementById(id).clientWidth;
     const padding = 20;
@@ -148,6 +176,11 @@ function draw_weight_history_charts(history, training_history) {
     for (let i in history) {
         const x_intercept = -1 * (history[i][2] / history[i][0]);
         const y_intercept = -1 * (history[i][2] / history[i][1]);
+
+        if (valid_intercepts_params([x_intercept, y_intercept])) {
+            document.getElementById(`intercept-table-${i}-x-value`).innerHTML = Number(x_intercept.toFixed(2));
+            document.getElementById(`intercept-table-${i}-y-value`).innerHTML = Number(y_intercept.toFixed(2));
+        }
 
         draw_weight_chart(`chart-${i}`, [x_intercept, y_intercept], inputs);
     }
