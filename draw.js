@@ -25,6 +25,7 @@ function add_html_elements_for_history_charts(history, training) {
                     training_grouped[i][idx][3] 
                         ? 'training-successful' : 'training-failed'
                 }">
+                    <td>${(training_grouped[i][idx][4] + 1)}</td>
                     <td>${training_grouped[i][idx][0][0]}</td>
                     <td>${training_grouped[i][idx][0][1]}</td>
                     <td>${training_grouped[i][idx][0][3]}</td>
@@ -73,6 +74,7 @@ function add_html_elements_for_history_charts(history, training) {
                     <table>
                         <thead>
                             <tr>
+                                <td>Id</td>
                                 <td>X</td>
                                 <td>Y</td>
                                 <td>Classe</td>

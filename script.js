@@ -20,7 +20,7 @@ function add_weights_to_history(current_weights) {
     weight_history.push(history_row);
 }
 
-function test_input(input, generatedClass, expectedClass) {
+function test_input(input, input_position, generatedClass, expectedClass) {
     const ok = generatedClass === expectedClass;
 
     const input_row = [];
@@ -28,7 +28,7 @@ function test_input(input, generatedClass, expectedClass) {
         input_row[i] = input[i];
     }
 
-    training_history.push([input_row, generatedClass, weight_history.length - 1, ok]);
+    training_history.push([input_row, generatedClass, weight_history.length - 1, ok, input_position]);
     return ok;
 }
 
@@ -63,7 +63,7 @@ function run_training() {
         let restart = false;
         while (true) {
             const generatedClass = neuron(inputs[idx], neuron_activation);
-            if (test_input(inputs[idx], generatedClass, inputs[idx][3])) break;
+            if (test_input(inputs[idx], idx, generatedClass, inputs[idx][3])) break;
     
             restart = true;
             recalculate_weights(generatedClass, idx);
